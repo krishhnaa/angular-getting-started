@@ -1,0 +1,32 @@
+<h1>{{title}}</h1>
+
+
+<!-- property binding -->
+<div [innerText]="productName" [hidden]="visible"></div>
+
+<!-- Event Binding -->
+<button (click)="toggle()">Toggle</button>
+<button (click)="loadProduct()">LoadProduct</button>
+<button (click)="addProduct()">AddProduct</button>
+<button (click)="toggleTable()">ToggleT</button>
+<pre>
+  {{selectedProduct | json}}
+</pre>
+
+<div>
+  <span>
+    {{selectedProduct.id}}
+  </span>
+  <span>
+    {{selectedProduct.name}}
+  </span>
+  <span>
+    {{selectedProduct.mfd}}
+  </span>
+  <span>
+    {{selectedProduct.price}}
+  </span>
+</div>
+<app-product-list [products]="productList" (selectProduct)="deleteProduct($event)" title="Product List"></app-product-list>
+<!--
+{{products | json}} -->
