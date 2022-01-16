@@ -1,6 +1,7 @@
+import { HeaderComponent } from './../header/header.component';
 
 import { toBase64String } from '@angular/compiler/src/output/source_map';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Product } from '../product';
 
 @Component({
@@ -9,7 +10,7 @@ import { Product } from '../product';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, AfterViewInit, AfterViewChecked {
   title = 'Product Information';
 
   productName = 'Apple';
@@ -17,6 +18,7 @@ export class ProductComponent implements OnInit {
 
   hidden = true;
 
+  @ViewChild(HeaderComponent, {static: true}) headerComponent! : HeaderComponent;
   selectedProduct: Partial<Product> = {}
   productList : Product[] =[]
   // products : Product[] =[
@@ -24,11 +26,20 @@ export class ProductComponent implements OnInit {
   //   {id: 1, name: 'Samsung X', mfd: new Date('1-Jan-2020'), price: 500000},
   //   {id: 1, name: 'Google', mfd: new Date('1-Jan-2020'), price: 500000}
   // ]
+  @ViewChild('apiError', {static: true}) errorDiv!: ElementRef<any>
   constructor() {
 
   }
 
+  ngAfterViewInit(): void{
+    this.headerComponent.header = 'Product component';
+  }
+  ngAfterViewChecked(): void{
+
+  }
   ngOnInit(): void {
+    console.log(this.errorDiv);
+    console.log(this.headerComponent);
     this.productList = [
       {id: 1, name: 'Iphone X', mfd: new Date('1-Jan-2020'), price: 500000},
       {id: 2, name: 'Samsung X', mfd: new Date('1-Jan-2020'), price: 500000},
@@ -37,6 +48,7 @@ export class ProductComponent implements OnInit {
   }
   toggle() {
     this.visible = !this.visible;
+    this.errorDiv.nativeElement.innerText = 'There is an error making api call please retry'
   }
 toggleTable() {
   this.hidden = !this.hidden;

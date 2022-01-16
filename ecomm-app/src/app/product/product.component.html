@@ -26,6 +26,10 @@
   <span>
     {{selectedProduct.price}}
   </span>
+  <div class="divTemplateRef" #apiError>
+
+  </div>
+  <app-header></app-header>
 </div>
 <app-product-list [products]="productList" (selectProduct)="deleteProduct($event)" title="Product List"></app-product-list>
 <!--
